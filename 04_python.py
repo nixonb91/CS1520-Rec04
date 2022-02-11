@@ -20,12 +20,20 @@ class Graph():
 		'''
 		Initialize the dictionary with the (key:values) specified above.
 		'''
+		self.dictionary = {'a': ['b'], 'b': ['a', 'c'], 'c': ['b']}
 		
 
 	def __str__(self):
 		'''
 		print the dictionary as described in the example above.
 		'''
+		s = '{\n'
+
+		for key in self.dictionary:
+			s += f"('{key}', {str(self.dictionary[key])})\n"
+
+		s += '}'
+		return s
 
 	def isConnected(self, person1, person2):
 		'''
@@ -34,6 +42,24 @@ class Graph():
 
 		Hint: try to use some search technique
 		'''
+		visited = {}
+		for keys in self.dictionary:
+			visited[keys] = 0
+
+		return self.helper(visited, person1, person2)
+
+	def helper(self, visited, curr, goal):
+		if visited[curr] == 1:
+			return False
+		if curr is goal:
+			return True
+
+		visited[curr] = 1
+		for key in self.dictionary[curr]:
+			if (self.helper(visited, key, goal)):
+				return True
+
+		return False
 		
 
 
